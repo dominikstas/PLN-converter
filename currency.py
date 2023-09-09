@@ -1,3 +1,4 @@
+import sqlite3
 #make database of currency, id of currency and site with the real time price
 money = 0
 currency = str
@@ -32,6 +33,7 @@ def input_currency():
 
 def check_currency(currency):
      currency
+     
 
 
 main()

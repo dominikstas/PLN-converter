@@ -8,11 +8,17 @@ cursor = db.cursor()
 money = 0
 currency = str
 valid = 0
+result = float
+choice = 0
 
 def main():
     while money == 0:
         input_value()
-    input_currency()
+    while valid == 0:
+        input_currency()
+    convert_buy(money, valid)
+    print(result)
+    
     
 #take an input from user what
 
@@ -38,10 +44,8 @@ def input_currency():
         global currency
         currency =  str(input("What's currency? "))
         check_currency(currency)
-        if valid !=0:
-             print("True")
-        else:
-             print("false")
+        if valid == 0:
+            raise ValueError
     except ValueError:
         print("Please enter valid name. ")
 
@@ -66,9 +70,30 @@ def show():
      for r in rows:
           print(r[1],r[2],r[3])
 
+
+def convert_sell(money, valid):
+    global result
+    sql_select_query = """select sell from currency where id=?"""
+    cursor.execute(sql_select_query, (valid,))
+    _ = cursor.fetchall()
+    for row in _:
+         result = money*row[0]
+         return result
+
+
+def convert_buy(money,valid):
+    global result
+    sql_select_query = """select buy from currency where id=?"""
+    cursor.execute(sql_select_query, (valid,))
+    _ = cursor.fetchall()
+    for row in _:
+         result = money*row[0]
+         return result
+
+
 main()
 
 
 
 
-#convert and print the result
+

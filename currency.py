@@ -1,4 +1,3 @@
-import cmd
 import sqlite3
 
 db = sqlite3.connect("currency.db")
@@ -9,7 +8,7 @@ money = 0
 currency = str
 valid = 0
 result = float
-choice = 0
+result1 = float
 
 def main():
     while money == 0:
@@ -17,7 +16,8 @@ def main():
     while valid == 0:
         input_currency()
     convert_buy(money, valid)
-    print(result)
+    convert_sell(money, valid)
+    print(f'buy = {result}\nsell = {result1}')
     
     
 #take an input from user what
@@ -72,13 +72,13 @@ def show():
 
 
 def convert_sell(money, valid):
-    global result
+    global result1
     sql_select_query = """select sell from currency where id=?"""
     cursor.execute(sql_select_query, (valid,))
     _ = cursor.fetchall()
     for row in _:
-         result = money*row[0]
-         return result
+         result1 = money*row[0]
+         return result1
 
 
 def convert_buy(money,valid):
@@ -89,7 +89,6 @@ def convert_buy(money,valid):
     for row in _:
          result = money*row[0]
          return result
-
 
 main()
 

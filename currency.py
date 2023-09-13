@@ -15,7 +15,7 @@ def main():
 def input_value():
         try:
             global money 
-            money = float(input("How much? "))
+            money = float(input("How much? (Deafult currency is PLN) "))
             return(money)
         except ValueError:
             print("You must enter the number.")

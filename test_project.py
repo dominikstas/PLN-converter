@@ -1,5 +1,5 @@
 import pytest
-import project as p
+import plnConverter as p
 
 def test_convert_buy():
     assert p.convert_buy(1, 1) == 4.65

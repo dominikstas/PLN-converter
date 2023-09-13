@@ -1,3 +1,4 @@
+import cmd
 import sqlite3
 
 db = sqlite3.connect("currency.db")
@@ -6,6 +7,7 @@ cursor = db.cursor()
 #make database of currency, id of currency and site with the real time price
 money = 0
 currency = str
+valid = 0
 
 def main():
     while money == 0:
@@ -32,16 +34,27 @@ def input_value():
 #input to what
 def input_currency():
     try:
+        global valid
         global currency
         currency =  str(input("What's currency? "))
         check_currency(currency)
-        if check_currency == "valid":
-             return(currency)
+        if valid !=0:
+             print("True")
+        else:
+             print("false")
     except ValueError:
         print("Please enter valid name. ")
 
 def check_currency(currency):
-     currency
+    global valid 
+    sql_select_query = """select * from currency where name like ?"""
+    cursor.execute(sql_select_query, (currency,))
+    id = cursor.fetchall()
+    for row in id:
+           valid += row[0]
+
+         
+
      
 def show():
      cursor.execute('''

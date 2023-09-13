@@ -1,15 +1,16 @@
 import sqlite3
 
+#connect database
 db = sqlite3.connect("currency.db")
 cursor = db.cursor()
 
-#make database of currency, id of currency and site with the real time price
 money = 0
 currency = str
 valid = 0
 result = float
 result1 = float
 
+#main function
 def main():
     while money == 0:
         input_value()
@@ -20,10 +21,7 @@ def main():
     print(f'buy = {result}\nsell = {result1}')
     
     
-#take an input from user what
-
-
-#input how many
+#input: how much?
 def input_value():
         try:
             global money 
@@ -35,31 +33,7 @@ def input_value():
         except ValueError:
             print("You must enter the number.")
     
-  
-
-#input to what
-def input_currency():
-    try:
-        global valid
-        global currency
-        currency =  str(input("What's currency? "))
-        check_currency(currency)
-        if valid == 0:
-            raise ValueError
-    except ValueError:
-        print("Please enter valid name. ")
-
-def check_currency(currency):
-    global valid 
-    sql_select_query = """select * from currency where name like ?"""
-    cursor.execute(sql_select_query, (currency,))
-    id = cursor.fetchall()
-    for row in id:
-           valid += row[0]
-
-         
-
-     
+#show table of prices
 def show():
      cursor.execute('''
                     select *
@@ -71,6 +45,30 @@ def show():
           print(r[1],r[2],r[3])
 
 
+#input:what currency?
+def input_currency():
+    try:
+        global valid
+        global currency
+        currency =  str(input("What's currency? "))
+        check_currency(currency)
+        if valid == 0:
+            raise ValueError
+    except ValueError:
+        print("Please enter valid name. ")
+
+
+#check if currency is valid
+def check_currency(currency):
+    global valid 
+    sql_select_query = """select * from currency where name like ?"""
+    cursor.execute(sql_select_query, (currency,))
+    id = cursor.fetchall()
+    for row in id:
+           valid += row[0]
+
+
+#convert to sell
 def convert_sell(money, valid):
     global result1
     sql_select_query = """select sell from currency where id=?"""
@@ -81,6 +79,7 @@ def convert_sell(money, valid):
          return result1
 
 
+#convert to buy
 def convert_buy(money,valid):
     global result
     sql_select_query = """select buy from currency where id=?"""
@@ -90,7 +89,8 @@ def convert_buy(money,valid):
          result = money*row[0]
          return result
 
-main()
+if __name__ == "__main__":
+    main()
 
 
 

@@ -24,14 +24,14 @@ def main():
             print("Please enter valid name. ")
     convert_buy(money, valid)
     convert_sell(money, valid)
-    print(f'buy = {result}\nsell = {result1}')
+    print(f'buy = {result} zł\nsell = {result1} zł')
     
     
 #input: how much?
 def input_value():
         try:
             global money 
-            money = float(input("How much? (Deafult currency is PLN). If you want check current prices, enter '0' "))
+            money = float(input("How much you wanna get?. If you want check current prices, enter '0' "))
             if money == 0:
                  show()
                  input_value()
